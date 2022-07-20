@@ -1,0 +1,64 @@
+@import "../../../../../../@dv/scss/dv";
+
+profile-photos-videos {
+
+  #photos-videos {
+
+    .period {
+
+      .period-title {
+        margin-bottom: 24px;
+
+        .name {
+          font-size: 20px;
+        }
+
+        .info {
+          margin-left: 16px;
+          font-size: 15px;
+        }
+      }
+
+      .period-media {
+        margin-bottom: 16px;
+
+        .media {
+          position: relative;
+          margin: 0 16px 16px 0;
+          border-radius: 4px;
+          overflow: hidden;
+
+          .preview {
+            display: block;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            -webkit-filter: brightness(100%);
+            object-fit: contain;
+
+            &:hover {
+              -webkit-filter: brightness(70%);
+              -webkit-transition: all 0.5s ease;
+              -moz-transition: all 0.5s ease;
+              -o-transition: all 0.5s ease;
+              -ms-transition: all 0.5s ease;
+              transition: all 0.5s ease;
+            }
+          }
+
+          .title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 0 16px;
+            height: 48px;
+            line-height: 48px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}

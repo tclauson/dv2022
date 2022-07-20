@@ -1,0 +1,34 @@
+@mixin dv-asset-uploader-theme($theme) {
+
+  $color: map-get($theme, background);
+
+  asset-uploader {
+
+    .asset-upload-container {
+
+      .preview-container {
+
+        .preview-item-wrapper {
+
+          .preview-actions {
+
+            .icon-wrapper {
+              mat-icon {
+                &.close-icon {
+                  color: map-get($color, card) !important;
+                }
+
+                &.make-feature-icon,
+                &.featured-icon {
+                  color: map-get($color, card) !important;
+                }
+              }
+            }
+
+          }
+
+        }
+      }
+    }
+  }
+}

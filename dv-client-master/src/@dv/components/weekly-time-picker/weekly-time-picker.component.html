@@ -1,0 +1,113 @@
+<div class="weekly-input-container" [formGroup]="form">
+  <!-- Monday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Monday</mat-label>
+    <time-picker
+      name="monday"
+      formControlName="monday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('monday').hasError('required')">
+      Monday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Tuesday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Tuesday</mat-label>
+    <time-picker
+      name="tuesday"
+      formControlName="tuesday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('tuesday').hasError('required')">
+      Tuesday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Wednesday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Wednesday</mat-label>
+    <time-picker
+      name="wednesday"
+      formControlName="wednesday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('wednesday').hasError('required')">
+      Wednesday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Thursday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Thursday</mat-label>
+    <time-picker
+      name="thursday"
+      formControlName="thursday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+      >
+    </time-picker>
+    <mat-error *ngIf="form.get('thursday').hasError('required')">
+      Thursday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Friday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Friday</mat-label>
+    <time-picker
+      name="friday"
+      formControlName="friday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('friday').hasError('required')">
+      Friday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Saturday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Saturday</mat-label>
+    <time-picker
+      name="saturday"
+      formControlName="saturday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('saturday').hasError('required')">
+      Saturday timings are required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Sunday -->
+  <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+    <mat-label>Sunday</mat-label>
+    <time-picker
+      name="sunday"
+      formControlName="sunday"
+      [placeholderFirst]="placeholderFirst"
+      [placeholderSecond]="placeholderSecond"
+      [required]="required"
+    >
+    </time-picker>
+    <mat-error *ngIf="form.get('sunday').hasError('required')">
+      Sunday timings are required
+    </mat-error>
+  </mat-form-field>
+</div>

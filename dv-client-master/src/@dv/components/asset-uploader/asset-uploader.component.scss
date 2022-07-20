@@ -1,0 +1,110 @@
+asset-uploader {
+
+  .asset-upload-container {
+    text-align: start;
+
+    .preview-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .preview-item-wrapper {
+      position: relative;
+      padding: 10px;
+
+      .preview-thumbnail {
+        position: relative;
+        z-index: 3;
+        cursor: pointer;
+
+        .asset-preview-thumbnail {
+          width: 110px;
+          height: 110px;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+          }
+        }
+
+        .thumbnail-backdrop {
+          visibility: hidden;
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 6px;
+          transition: all 100ms ease-in-out;
+          pointer-events: none;
+          background: rgba(43, 56, 71, .2);
+        }
+
+        &:hover {
+          .thumbnail-backdrop {
+            visibility: visible;
+          }
+        }
+
+        &:active {
+          .thumbnail-backdrop {
+            visibility: visible;
+            background: rgba(43, 56, 71, 0.4);
+          }
+        }
+      }
+
+      .preview-actions {
+        position: absolute;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        top: 3px;
+        left: 5px;
+        width: 91%;
+
+        .icon-wrapper {
+          cursor: pointer;
+
+          mat-icon {
+            &.close-icon,
+            &.set-featured-icon {
+              max-width: 20px;
+              max-height: 20px;
+              min-width: 20px;
+              min-height: 20px;
+              font-size: 18px;
+              text-align: center;
+              line-height: 1.2;
+              border-radius: 50%;
+            }
+
+            &.close-icon {
+              background: #fe7676;
+            }
+
+            &.featured-icon {
+              max-width: 30px;
+              max-height: 30px;
+              min-width: 30px;
+              min-height: 30px;
+              font-size: 24px;
+              text-align: center;
+              line-height: 1.35;
+              border-radius: 50%;
+            }
+          }
+        }
+
+      }
+
+    }
+
+  }
+}

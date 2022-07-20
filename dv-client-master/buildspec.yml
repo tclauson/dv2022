@@ -1,0 +1,32 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "divervisibility.com"
+    APP_NAME: "dv"
+    BUILD_ENV: "prod"
+    CDN_DISTRIBUTION_ID: "E1TU0G339I0OR0"
+
+phases:
+  install:
+    runtime-versions:
+      # NodeJS included in the docker image
+      nodejs: 12
+    commands:
+      # Install node dependencies.
+      - npm install
+
+  build:
+    commands:
+      # Builds Angular application.
+      - node ./node_modules/@angular/cli/bin/ng build --$BUILD_ENV
+
+  post_build:
+    commands:
+      # Clear S3 bucket.
+      - aws s3 rm s3://$S3_BUCKET --recursive
+      # Copy files from dist to S3
+      - cd dist
+      - aws s3 cp $APP_NAME s3://$S3_BUCKET --recursive
+      # Begin cloudfront invalidation
+      - aws cloudfront create-invalidation --distribution-id $CDN_DISTRIBUTION_ID --paths "/*"

@@ -1,0 +1,157 @@
+.color-white {
+  color: $white !important;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.primary,
+.accent {
+  color: $white;
+}
+
+.overlay-mat-dialog-pd-0 {
+  .mat-dialog-container {
+    padding: 0 !important;
+  }
+}
+
+.snackbar {
+  .mat-simple-snackbar-action {
+    color: $primary;
+  }
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+
+  max-height: 95vh;
+}
+
+.tox {
+  &.tox-tinymce {
+    z-index: 9999;
+  }
+}
+
+.featured-asset {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+
+  margin: 0 8px 0 0;
+  line-height: 40px;
+
+  border-radius: 50%;
+
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+
+  &.square {
+    border-radius: 0;
+  }
+
+  &.small {
+    width: 20px;
+    height: 20px;
+
+    min-width: 20px;
+    line-height: 20px;
+  }
+
+  &.big {
+    width: 72px;
+    height: 72px;
+
+    min-width: 72px;
+    line-height: 72px;
+  }
+
+  &.huge {
+    width: 96px;
+    height: 96px;
+
+    min-width: 96px;
+    line-height: 96px;
+  }
+}
+
+.secondary-text {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.button-spinner {
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: $primary;
+    animation: spinner .8s linear infinite;
+  }
+}
+
+.hide {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+
+  min-height: 0 !important;
+  height: 0 !important;
+}
+
+.mat-table-select {
+  text-align: start;
+
+  .mat-select-value {
+    display: flex;
+    max-width: initial;
+    color: inherit !important;
+
+    .mat-select-placeholder {
+      color: inherit !important;
+    }
+  }
+  .mat-select-value {
+  }
+}
+
+.cdk-overlay-backdrop {
+  &.cdk-overlay-backdrop-showing {
+    &.dark-backdrop {
+      background: black;
+      opacity: 0.85 !important;
+    }
+  }
+}
+
+.no-stream {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}

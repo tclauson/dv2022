@@ -1,0 +1,27 @@
+@mixin terms-theme($theme) {
+
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $is-dark: map-get($theme, is-dark);
+
+  terms {
+
+    #terms {
+
+      #terms-form-wrapper {
+
+        #terms-form {
+          @if ($is-dark) {
+            background: mat-color($dv-navy, 600);
+          } @else {
+            background: map-get($background, card);
+          }
+
+          .subtitle {
+            color: map-get($foreground, secondary-text);
+          }
+        }
+      }
+    }
+  }
+}

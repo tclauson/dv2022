@@ -1,0 +1,213 @@
+<div class="page-layout carded fullwidth inner-scroll" id="conditions">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent"
+         fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutAlign="center center"
+         fxLayoutAlign.gt-sm="space-between center">
+
+      <!-- APP TITLE -->
+      <div
+        class="logo mb-24 mb-md-0"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'/apps/spots'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <mat-icon
+          class="logo-icon s-32 mr-16"
+          [@animate]="{value:'*',params: { delay:'50ms',scale:'0.2' }}"
+        >
+          pool
+        </mat-icon>
+        <span
+          class="logo-text h1"
+          [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}"
+        >
+          Conditions
+        </span>
+      </div>
+      <!-- / APP TITLE -->
+
+<!--      &lt;!&ndash; SEARCH &ndash;&gt;-->
+<!--      <div class="search-wrapper mx-32 mx-md-0">-->
+<!--        <div-->
+<!--          class="search"-->
+<!--          fxFlex-->
+<!--          fxLayout="row"-->
+<!--          fxLayoutAlign="start center"-->
+<!--        >-->
+<!--          <mat-icon>search</mat-icon>-->
+<!--          <input #filter placeholder="Search for a condition">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; / SEARCH &ndash;&gt;-->
+
+      <!-- ADD BUTTON -->
+      <button
+        class="add-condition-button dv-white mt-24 mt-md-0"
+        mat-raised-button
+        [routerLink]="'/apps/spots/' + spotId + '/conditions/new'"
+      >
+        <span>ADD CONDITIONS</span>
+      </button>
+      <!-- / ADD BUTTON -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table
+        #table
+        class="conditions-table"
+        dvPerfectScrollbar
+        matSort
+        [@animateStagger]="{value:'50'}"
+        [dataSource]="dataSource"
+      >
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="featured-asset">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let condition">
+            <img
+              *ngIf="condition?.featuredAsset?.url"
+              class="condition-asset"
+              [alt]="condition.name"
+              [src]="condition.featuredAsset.url"
+              (click)="openLightbox($event, condition.featuredAsset.url)"
+            />
+            <img
+              *ngIf="!condition?.featuredAsset?.url"
+              [alt]="condition.name"
+              [src]="'assets/images/shops/shop-asset-placeholder.png'"
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="date-time">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Date and Time</mat-header-cell>
+          <mat-cell *matCellDef="let condition">
+            <p class="text-truncate">{{condition.createdAt | date: 'MMM dd, yyyy HH:mm'}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Temperature Column -->
+        <ng-container matColumnDef="temperature">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Temperature</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{condition.temperature}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Visibility Column -->
+        <ng-container matColumnDef="visibility">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Visibility</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{condition.visibility}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Swell Column -->
+        <ng-container matColumnDef="swell">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Swell</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{condition.swell}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- CreatedBy Column -->
+        <ng-container matColumnDef="created-by">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Created By</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{condition.createdBy.name}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- CreatedBy Column -->
+        <ng-container matColumnDef="user-type">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>User Type</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{condition.model}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Details Column -->
+        <ng-container matColumnDef="details">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Details</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-xs>
+            <mat-icon
+              class="s-16"
+              color="accent"
+              matTooltip="Details"
+              (click)="openDetails($event, condition)"
+            >
+              details
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Delete</mat-header-cell>
+          <mat-cell *matCellDef="let condition" fxHide fxShow.gt-xs>
+            <mat-icon
+              *ngIf="canManageCondition(condition)"
+              matTooltip="Delete Conditions"
+              color="accent"
+              (click)="confirmDelete($event, condition)"
+            >
+              delete
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row
+          class="condition"
+          matRipple
+          [routerLink]="'/apps/spots/' + spotId + '/conditions/' + condition._id "
+          *matRowDef="let condition; columns: displayedColumns;"
+        >
+        </mat-row>
+
+      </mat-table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource.total"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

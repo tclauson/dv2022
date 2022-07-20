@@ -1,0 +1,27 @@
+@import "../components/sidebar/sidebar.theme";
+@import "../components/asset-uploader/asset-uploader.theme";
+@import "../components/date-time-picker/date-time-picker.theme";
+@import "../components/weekly-time-picker/time-picker/time-picker.theme";
+@import "../components/map-dialog/map-dialog.theme";
+@import "../components/widget/widget.theme";
+
+@mixin dv-core-theme($theme) {
+
+  // Theming for Dv core styles
+  @include colors-theme($theme);
+  @include cards-theme($theme);
+  @include material-theme($theme);
+  @include page-layouts-theme($theme);
+  @include typography-theme($theme);
+
+  // Theming for Dv components
+  @include dv-sidebar-theme($theme);
+  @include dv-asset-uploader-theme($theme);
+  @include dv-date-time-picker-theme($theme);
+  @include dv-time-picker-theme($theme);
+  @include map-dialog-theme($theme);
+  @include dv-widget-theme($theme);
+
+  // Theming for 3rd party components
+}
+

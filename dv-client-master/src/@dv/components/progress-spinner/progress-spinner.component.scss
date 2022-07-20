@@ -1,0 +1,28 @@
+dv-progress-spinner  {
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99997;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.95;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  .spinner-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+    p {
+      color: #3c3c3c;
+    }
+  }
+}

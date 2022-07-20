@@ -1,0 +1,22 @@
+.mat-form-field-infix {
+  &.text-editor-form-field {
+    padding: 0;
+  }
+}
+
+text-editor {
+  ckeditor {
+    .ck-editor__editable {
+      height: inherit;
+      padding: 0;
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      & > .ck-placeholder {
+        &::before {
+          color: #b2b2b2;
+        }
+      }
+    }
+  }
+}

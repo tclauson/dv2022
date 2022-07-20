@@ -1,0 +1,302 @@
+<div class="page-layout carded fullwidth inner-scroll" id="user">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'/pages/profile'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div class="user-asset mr-8 mr-sm-16" [@animate]="{ value: '*', params: { delay:'50ms',scale:'0.2' } }">
+          <ng-container *ngIf="user?.avatar?.url; then avatar else placeHolder"></ng-container>
+          <ng-template #avatar>
+            <img class="user-asset" [alt]="user.name" [src]="user?.avatar?.url"/>
+          </ng-template>
+          <ng-template #placeHolder>
+            <img [alt]="user.name" [src]="'assets/images/avatars/default.png'">
+          </ng-template>
+        </div>
+
+        <div
+          [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}"
+          fxLayout="column"
+          fxLayoutAlign="start start"
+        >
+          <div class="h2">{{user.name}}</div>
+          <div class="subtitle secondary-text">
+            <span>User Detail</span>
+          </div>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <button
+        class="save-user-button"
+        mat-raised-button
+        *ngIf="canExec"
+        [disabled]="userForm.invalid || userForm.pristine"
+        (click)="updateInfo()"
+      >
+        <span>SAVE</span>
+      </button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <!-- CONTENT -->
+      <div class="content">
+
+        <form
+          class="user w-100-p"
+          name="userForm"
+          fxFlex
+          fxLayout="column"
+          [formGroup]="userForm"
+        >
+
+          <mat-tab-group>
+
+            <mat-tab label="Personal Details">
+
+              <div class="tab-content p-24" dvPerfectScrollbar>
+
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+                  <mat-label>Full Name</mat-label>
+                  <input
+                    name="name"
+                    formControlName="name"
+                    placeholder="Full Name"
+                    matInput
+                    required
+                  >
+                  <mat-error *ngFor="let error of errorMessages.name">
+                    <mat-error
+                      *ngIf="userForm.get('name').hasError(error.type) && userForm.get('name').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+                  <mat-label>Email</mat-label>
+                  <input
+                    name="email"
+                    formControlName="email"
+                    placeholder="Email"
+                    matInput
+                    required
+                  >
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+                  <mat-label>Tel.</mat-label>
+                  <input
+                    name="tel"
+                    formControlName="tel"
+                    placeholder="Phone Number"
+                    matInput
+                    required
+                  >
+                  <mat-error *ngFor="let error of errorMessages.tel">
+                    <mat-error
+                      *ngIf="userForm.get('tel').hasError(error.type) && userForm.get('tel').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+                  <mat-label>Date of Birth</mat-label>
+                  <date-time-picker
+                    placeholder="Date of Birth"
+                    formControlName="dob"
+                    required
+                    pickerType="date"
+                  >
+                  </date-time-picker>
+                  <mat-error *ngFor="let error of errorMessages.dob">
+                    <mat-error
+                      *ngIf="userForm.get('dob').hasError(error.type) && userForm.get('dob').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always" color="primary">
+                  <mat-label>Gender</mat-label>
+                  <input matInput [ngStyle]="{ display: 'none' }" required/>
+                  <mat-radio-group
+                    formControlName="gender"
+                    fxFlex="100"
+                    fxLayout="row"
+                    fxLayoutGap="10px"
+                  >
+                    <mat-radio-button
+                      color="primary"
+                      value="male"
+                    >
+                      Male
+                    </mat-radio-button>
+                    <mat-radio-button
+                      color="primary"
+                      value="female"
+                    >
+                      Female
+                    </mat-radio-button>
+                    <mat-radio-button
+                      color="primary"
+                      value="other"
+                    >
+                      Other
+                    </mat-radio-button>
+                  </mat-radio-group>
+                  <mat-error *ngFor="let error of errorMessages.gender">
+                    <mat-error
+                      *ngIf="userForm.get('gender').hasError(error.type) && userForm.get('gender').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+            </mat-tab>
+
+            <mat-tab *ngIf="isShop" label="Shop Details">
+
+              <div class="tab-content p-24" formGroupName="shop" dvPerfectScrollbar>
+
+                <mat-form-field appearance="outline" class="w-100-p" floatLabel="always">
+                  <mat-label>Shop Name</mat-label>
+                  <input
+                    name="name"
+                    formControlName="name"
+                    placeholder="Shop Name"
+                    matInput
+                    required
+                  >
+                  <mat-error *ngFor="let error of errorMessages.shop.name">
+                    <mat-error
+                      *ngIf="userForm.get('shop.name').hasError(error.type) && userForm.get('shop.name').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100-p" floatLabel="always">
+                  <mat-label>Website</mat-label>
+                  <input
+                    name="website"
+                    formControlName="website"
+                    placeholder="Website Url"
+                    matInput
+                  >
+                  <mat-error *ngFor="let error of errorMessages.shop.website">
+                    <mat-error
+                      *ngIf="userForm.get('shop.website').hasError(error.type) && userForm.get('shop.website').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <map-field
+                  [disabled]="!canExec"
+                  formGroupName="address"
+                >
+                </map-field>
+
+                <weekly-time-picker
+                  [disabled]="!canExec"
+                  formGroupName="shopTime"
+                >
+                </weekly-time-picker>
+
+              </div>
+
+            </mat-tab>
+
+            <mat-tab *ngIf="isShop" label="Shop Images">
+
+              <div class="tab-content p-24" dvPerfectScrollbar>
+                <div fxLayout="row wrap" fxLayoutAlign="start start">
+                  <asset-uploader
+                    [disabled]="!canExec"
+                    [featuredAsset]="user.shop.featuredAsset"
+                    [assetGallery]="user.shop.assetGallery"
+                    [readyForUpload]="readyForUpload"
+                    [refIdModel]="refIdModel"
+                    (assetChanged)="onAssetChanged()"
+                    (uploadSuccess)="onUploadSuccessful()"
+                    (uploadFailed)="onUploadFailed()"
+                  >
+                  </asset-uploader>
+                </div>
+              </div>
+
+            </mat-tab>
+
+            <mat-tab *ngIf="isShop" label="Live Stream">
+
+              <div class="tab-content p-24" formGroupName="shop" dvPerfectScrollbar>
+                <mat-form-field class="w-100-p" appearance="outline" floatLabel="always">
+                  <mat-label>YouTube Live Stream Link</mat-label>
+                  <input
+                    name="streamLink"
+                    formControlName="streamLink"
+                    placeholder="YouTube Live Stream Link"
+                    matInput
+                  >
+                  <mat-error *ngFor="let error of errorMessages.shop.streamLink">
+                    <mat-error
+                      *ngIf="userForm.get('shop.streamLink').hasError(error.type) && userForm.get('shop.streamLink').invalid"
+                    >
+                      {{error.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+
+                <youtube-player
+                  *ngIf="userForm.get('shop.streamId').value"
+                  [streamId]="userForm.get('shop.streamId').value"
+                >
+                </youtube-player>
+                <div
+                  *ngIf="!userForm.get('shop.streamId').value"
+                  class="no-stream"
+                >
+                  No stream found
+                </div>
+              </div>
+
+            </mat-tab>
+
+          </mat-tab-group>
+
+        </form>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

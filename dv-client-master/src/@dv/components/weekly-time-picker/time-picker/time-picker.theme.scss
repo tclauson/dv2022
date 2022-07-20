@@ -1,0 +1,23 @@
+@mixin dv-time-picker-theme($theme) {
+
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+
+  ngx-material-timepicker-content {
+    --body-background-color: #{map-get($background, card)};
+    --button-color: #{map-get($accent, default)};
+    --dial-background-color: #{map-get($accent, default)};
+    --clock-face-background-color: #{map-get($background, app-bar)};
+    --clock-hand-color: #{map-get($accent, default)};
+    --clock-face-time-inactive-color: #{map-get($primary, default-contrast)};
+  }
+}
+
+
+
+
+
+

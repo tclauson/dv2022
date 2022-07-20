@@ -1,0 +1,201 @@
+// -----------------------------------------------------------------------------------------------------
+// @ Custom color maps for Dv
+// -----------------------------------------------------------------------------------------------------
+$dv-white: (
+  500: white,
+  contrast: (
+    500: $dark-primary-text
+  )
+);
+
+$dv-black: (
+  500: black,
+  contrast: (
+    500: $light-primary-text,
+  )
+);
+
+$dv-navy: (
+  50: #ECECEE,
+  100: #C5C6CB,
+  200: #9EA1A9,
+  300: #7D818C,
+  400: #5C616F,
+  500: #3C4252,
+  600: #353A48,
+  700: #2D323E,
+  800: #262933,
+  900: #1E2129,
+  A100: #C5C6CB,
+  A200: #9EA1A9,
+  A400: #5C616F,
+  A700: #2D323E,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  )
+);
+
+// Generate Dv color classes for custom palettes
+$custom_palettes: (
+  dv-white: $dv-white,
+  dv-black: $dv-black,
+  dv-navy: $dv-navy
+);
+
+@include dv-color-classes($custom_palettes);
+
+// -----------------------------------------------------------------------------------------------------
+// @ Typography
+// -----------------------------------------------------------------------------------------------------
+
+// Angular Material typography
+$typography: mat-typography-config(
+  $font-family: 'Muli, Helvetica Neue, Arial, sans-serif',
+  $title: mat-typography-level(20px, 32px, 600),
+  $body-2: mat-typography-level(14px, 24px, 600),
+  $button: mat-typography-level(14px, 14px, 600),
+  $input: mat-typography-level(16px, 1.125, 400) // line-height must be unitless !!!
+);
+
+// Setup the typography
+@include angular-material-typography($typography);
+
+// -----------------------------------------------------------------------------------------------------
+// @ Component theming
+// -----------------------------------------------------------------------------------------------------
+
+// Import app and page component themes here to enable theming for them
+//@import "src/app/layout/components/chat-panel/chat-panel.theme";
+@import "src/app/layout/components/toolbar/toolbar.theme";
+
+
+@import "src/app/main/apps/shops/shops.theme";
+@import "src/app/main/apps/spots/spots.theme";
+@import "src/app/main/apps/spots/conditions/conditions.theme";
+@import "src/app/main/apps/deals/deals.theme";
+@import "src/app/main/apps/users/users.theme";
+@import "src/app/main/apps/advs/advs.theme";
+
+
+@import "src/app/main/pages/authentication/login/login.theme";
+@import "src/app/main/pages/authentication/reset-password/reset-password.theme";
+@import "src/app/main/pages/authentication/forgot-password/forgot-password.theme";
+@import "src/app/main/pages/authentication/mail-confirm/mail-confirm.theme";
+@import "src/app/main/pages/errors/403/error-403.theme";
+@import "src/app/main/pages/errors/404/error-404.theme";
+@import "src/app/main/pages/errors/500/error-500.theme";
+@import "src/app/main/pages/errors/invalid-token/invalid-token.theme";
+@import "src/app/main/pages/profile/tabs/about/about.theme";
+@import "src/app/main/pages/profile/tabs/photos-videos/photos-videos.theme";
+@import "src/app/main/pages/policy/policy.theme";
+@import "src/app/main/pages/terms/terms.theme";
+
+
+// Define a mixin for easier access
+@mixin components-theme($theme) {
+
+  // Layout components
+  //@include chat-panel-theme($theme);
+  @include toolbar-theme($theme);
+
+
+  // Apps
+  @include shops-theme($theme);
+  @include spots-theme($theme);
+  @include conditions-theme($theme);
+  @include deals-theme($theme);
+  @include users-theme($theme);
+  @include advs-theme($theme);
+
+
+  // Pages
+  @include login-theme($theme);
+  @include reset-password-theme($theme);
+  @include forgot-password-theme($theme);
+  @include mail-confirm-theme($theme);
+  @include error-403-theme($theme);
+  @include error-404-theme($theme);
+  @include error-500-theme($theme);
+  @include invalid-token-theme($theme);
+  @include profile-about-theme($theme);
+  @include profile-photos-videos-theme($theme);
+  @include policy-theme($theme);
+  @include terms-theme($theme);
+
+  // UI
+}
+
+// -----------------------------------------------------------------------------------------------------
+// @ Define the default theme
+// -----------------------------------------------------------------------------------------------------
+
+// Add ".theme-default" class to the body to activate this theme.
+// Define the primary, accent and warn palettes
+$default-primary-palette: mat-palette($dv-navy);
+$default-accent-palette: mat-palette($mat-orange, 600, 400, 700);
+$default-warn-palette: mat-palette($mat-red);
+
+// Create the Material theme object
+$theme: mat-light-theme($default-primary-palette, $default-accent-palette, $default-warn-palette);
+
+// Add ".theme-light" class to the body to activate this theme.
+// Class name must start with "theme-" !!!
+body.theme-default {
+
+  // Generate the Angular Material theme
+  @include angular-material-theme($theme);
+
+  // Apply the theme to the Dv Core
+  @include dv-core-theme($theme);
+
+  // Apply the theme to the user components
+  @include components-theme($theme);
+
+  // Generate Dv color classes for primary, accent and warn colors
+  $palettes: (
+    primary: $default-primary-palette,
+    accent: $default-accent-palette,
+    warn: $default-warn-palette
+  );
+
+  @include dv-color-classes($palettes);
+}
+
+// Create the Material theme object
+$theme-dark: mat-dark-theme($default-primary-palette, $default-accent-palette, $default-warn-palette);
+
+// Add ".theme-dark" class to the body to activate this theme.
+// Class name must start with "theme-" !!!
+body.theme-default-dark {
+
+  // Generate the Angular Material theme
+  @include angular-material-theme($theme-dark);
+
+  // Apply the theme to the Dv Core
+  @include dv-core-theme($theme-dark);
+
+  // Apply the theme to the user components
+  @include components-theme($theme-dark);
+
+  // Generate Dv color classes for primary, accent and warn colors
+  $palettes: (
+    primary: $default-primary-palette,
+    accent: $default-accent-palette,
+    warn: $default-warn-palette
+  );
+
+  @include dv-color-classes($palettes);
+}

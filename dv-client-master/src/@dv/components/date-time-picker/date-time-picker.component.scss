@@ -1,0 +1,12 @@
+date-time-picker {
+  display: flex;
+
+  mat-icon {
+    font-size: 150%;
+    line-height: 1.125;
+    cursor: pointer;
+    max-height: 17px;
+    min-height: 17px;
+    transform: translateY(-7px);
+  }
+}

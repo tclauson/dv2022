@@ -1,0 +1,233 @@
+<div class="page-layout carded fullwidth inner-scroll" id="users">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent"
+         fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutAlign="center center"
+         fxLayoutAlign.gt-sm="space-between center">
+
+      <!-- APP TITLE -->
+      <div
+        class="logo mb-24 mb-md-0"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <mat-icon
+          class="logo-icon s-32 mr-16"
+          [@animate]="{value:'*',params: { delay:'50ms',scale:'0.2' }}"
+        >
+          store
+        </mat-icon>
+        <span
+          class="logo-text h1"
+          [@animate]="{value:'*',params:{ delay:'100ms',x:'-25px' }}"
+        >
+          Users
+        </span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-wrapper mx-32 mx-md-0">
+        <div
+          class="search"
+          fxFlex
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <mat-icon>search</mat-icon>
+          <input #filter placeholder="Search for a user">
+        </div>
+      </div>
+      <!-- / SEARCH -->
+
+      <!-- ADD BUTTON -->
+      <button
+        class="add-user-button dv-white mt-24 mt-md-0"
+        mat-raised-button
+        [routerLink]="'/apps/users/new'"
+      >
+        <span>ADD NEW USER</span>
+      </button>
+      <!-- / ADD BUTTON -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table
+        #table
+        class="users-table"
+        dvPerfectScrollbar
+        matSort
+        [@animateStagger]="{value:'50'}"
+        [dataSource]="dataSource"
+      >
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="featured-asset">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <img
+              *ngIf="user.avatar?.url"
+              class="user-asset"
+              [alt]="user.name"
+              [src]="user.avatar.url"
+              (click)="openLightbox($event, user.avatar.url)"
+            />
+            <img
+              *ngIf="!user.avatar?.url"
+              [alt]="user.name"
+              [src]="'assets/images/shops/shop-asset-placeholder.png'"
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *matCellDef="let user">
+            <p class="text-truncate">{{user.name}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Email</mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{user.email}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Dob Column -->
+        <ng-container matColumnDef="dob">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Dob</mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{user.dob | date: 'MMM dd, yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Tel Column -->
+        <ng-container matColumnDef="gender">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>
+            <mat-select
+              #columnSelect
+              class="mat-table-select"
+              placeholder="Gender"
+              data-name="gender"
+            >
+              <mat-option value="">All</mat-option>
+              <mat-option value="male">Male</mat-option>
+              <mat-option value="female">Female</mat-option>
+              <mat-option value="other">Other</mat-option>
+            </mat-select>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{user.gender | titlecase}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>
+            <mat-select
+              #columnSelect
+              class="mat-table-select"
+              placeholder="User type"
+              data-name="role"
+            >
+              <mat-option value="">All</mat-option>
+              <mat-option
+                *ngFor="let role of userRoles"
+                [value]="role._id"
+              >
+                {{role.name}}
+              </mat-option>
+            </mat-select>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-xs>
+            <p
+              class="price text-truncate"
+              [ngClass]="getRoleColor(user?.role?.name)"
+            >
+              {{user?.role?.name}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Created Column -->
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Created</mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{user.createdAt | date: 'MMM dd, yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Updated Column -->
+        <ng-container matColumnDef="updatedAt">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Updated</mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{user.updatedAt | date: 'MMM dd, yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Delete</mat-header-cell>
+          <mat-cell *matCellDef="let user" fxHide fxShow.gt-xs>
+            <mat-icon
+              matTooltip="Delete User"
+              color="accent"
+              (click)="confirmDelete($event, user)"
+            >
+              delete
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row
+          class="user"
+          matRipple
+          [routerLink]="'/apps/users/'+user._id"
+          *matRowDef="let user; columns: displayedColumns;"
+        >
+        </mat-row>
+
+      </mat-table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource.total"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

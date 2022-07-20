@@ -1,0 +1,97 @@
+<div class="page-layout carded fullwidth inner-scroll" id="advs">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent"
+         fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutAlign="center center"
+         fxLayoutAlign.gt-sm="space-between center">
+
+      <!-- APP TITLE -->
+      <div
+        class="logo mb-24 mb-md-0"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <mat-icon
+          class="logo-icon s-32 mr-16"
+          [@animate]="{value:'*',params: { delay:'50ms',scale:'0.2' }}"
+        >
+          branding_watermark
+        </mat-icon>
+        <span
+          class="logo-text h1"
+          [@animate]="{value:'*',params:{ delay:'100ms',x:'-25px' }}"
+        >
+          Advertisements
+        </span>
+      </div>
+      <!-- / APP TITLE -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table
+        #table
+        class="advs-table"
+        dvPerfectScrollbar
+        matSort
+        [@animateStagger]="{value:'50'}"
+        [dataSource]="dataSource"
+      >
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="featured-asset">
+          <mat-header-cell *matHeaderCellDef>Asset</mat-header-cell>
+          <mat-cell *matCellDef="let adv">
+            <img
+              *ngIf="adv.featuredAsset?.url"
+              class="adv-asset"
+              [alt]="adv.name"
+              [src]="adv.featuredAsset.url"
+              (click)="openLightbox($event, adv.avatar.url)"
+            />
+            <img
+              *ngIf="!adv.featuredAsset?.url"
+              [alt]="adv.name"
+              [src]="'assets/images/shops/shop-asset-placeholder.png'"
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *matCellDef="let adv">
+            <p class="text-truncate">{{adv.name}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row
+          class="adv"
+          matRipple
+          [routerLink]="'/apps/advs/'+ adv._id"
+          *matRowDef="let adv; columns: displayedColumns;"
+        >
+        </mat-row>
+
+      </mat-table>
+
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

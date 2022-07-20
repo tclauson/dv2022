@@ -1,0 +1,223 @@
+<div class="page-layout carded fullwidth inner-scroll" id="shops">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg accent"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header accent"
+         fxLayout="column"
+         fxLayout.gt-sm="row"
+         fxLayoutAlign="center center"
+         fxLayoutAlign.gt-sm="space-between center">
+
+      <!-- APP TITLE -->
+      <div
+        class="logo mb-24 mb-md-0"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+      >
+        <mat-icon
+          class="logo-icon s-32 mr-16"
+          [@animate]="{value:'*',params: { delay:'50ms',scale:'0.2' }}"
+        >
+          store
+        </mat-icon>
+        <span
+          class="logo-text h1"
+          [@animate]="{value:'*',params:{ delay:'100ms',x:'-25px' }}"
+        >
+          Shops
+        </span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-wrapper mx-32 mx-md-0">
+        <div
+          class="search"
+          fxFlex
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <mat-icon>search</mat-icon>
+          <input #filter placeholder="Search for a shop">
+        </div>
+      </div>
+      <!-- / SEARCH -->
+
+      <!-- ADD BUTTON -->
+      <button
+        class="add-shop-button dv-white mt-24 mt-md-0"
+        mat-raised-button
+        [routerLink]="'/apps/shops/new'"
+      >
+        <span>ADD NEW SHOP</span>
+      </button>
+      <!-- / ADD BUTTON -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card">
+
+      <mat-table
+        #table
+        class="shops-table"
+        dvPerfectScrollbar
+        matSort
+        [@animateStagger]="{value:'50'}"
+        [dataSource]="dataSource"
+      >
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="featured-asset">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let shop">
+            <img
+              *ngIf="shop.featuredAsset?.url"
+              class="shop-asset"
+              [alt]="shop.name"
+              [src]="shop.featuredAsset.url"
+              (click)="openLightbox($event, shop.featuredAsset.url)"
+            />
+            <img
+              *ngIf="!shop.featuredAsset?.url"
+              [alt]="shop.name"
+              [src]="'assets/images/shops/shop-asset-placeholder.png'"
+            >
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+          <mat-cell *matCellDef="let shop">
+            <p class="text-truncate">{{shop.name}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Location Column -->
+        <ng-container matColumnDef="location">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Location</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{shop.address.fullAddress}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="user-name">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>User Name</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-xs>
+            <p class="price text-truncate">{{shop.user.name}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="user-email">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>User Email</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-xs>
+            <p class="price text-truncate">{{shop.user.email}}</p>
+          </mat-cell>
+        </ng-container>
+
+<!--        &lt;!&ndash; Status Column &ndash;&gt;-->
+<!--        <ng-container *ngIf="canManageShops" matColumnDef="status">-->
+<!--          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>-->
+<!--            <mat-select-->
+<!--              #columnSelect-->
+<!--              class="mat-table-select"-->
+<!--              placeholder="Status"-->
+<!--              data-name="status"-->
+<!--            >-->
+<!--              <mat-option value="">All</mat-option>-->
+<!--              <mat-option value="active">Active</mat-option>-->
+<!--              <mat-option value="pending">Pending</mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-header-cell>-->
+<!--          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-xs>-->
+<!--            <ng-container>-->
+<!--              <mat-icon-->
+<!--                *ngIf="shop.active"-->
+<!--                matTooltip="Disable shop"-->
+<!--                class="active-icon green-600 s-16"-->
+<!--              >-->
+<!--                check-->
+<!--              </mat-icon>-->
+<!--              <mat-icon-->
+<!--                *ngIf="!shop.active"-->
+<!--                matTooltip="Enable shop"-->
+<!--                class="active-icon red-500 s-16"-->
+<!--              >-->
+<!--                close-->
+<!--              </mat-icon>-->
+<!--            </ng-container>-->
+<!--          </mat-cell>-->
+<!--        </ng-container>-->
+
+        <!-- Created Column -->
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Created</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{shop.createdAt | date: 'MMM dd, yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Updated Column -->
+        <ng-container matColumnDef="updatedAt">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md mat-sort-header>Updated</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-md>
+            <p class="category text-truncate">
+              {{shop.updatedAt | date: 'MMM dd, yyyy'}}
+            </p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Delete Column -->
+        <ng-container *ngIf="canManageShops" matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Delete</mat-header-cell>
+          <mat-cell *matCellDef="let shop" fxHide fxShow.gt-xs>
+            <mat-icon
+              matTooltip="Delete Shop"
+              color="accent"
+              (click)="confirmDelete($event, shop)"
+            >
+              delete
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row
+          class="shop"
+          matRipple
+          [routerLink]="'/apps/shops/'+shop._id"
+          *matRowDef="let shop; columns: displayedColumns;"
+        >
+        </mat-row>
+
+      </mat-table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource.total"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20, 50]"
+      >
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

@@ -1,0 +1,21 @@
+time-picker {
+  display: flex;
+
+  .input-container {
+    display: flex;
+    flex: 1 1 auto;
+  }
+
+  .input-spacer {
+    padding: 0 9px;
+  }
+
+  mat-icon {
+    font-size: 150%;
+    line-height: 1.125;
+    cursor: pointer;
+    max-height: 17px;
+    min-height: 17px;
+    transform: translateY(-7px);
+  }
+}

@@ -1,0 +1,74 @@
+@import "../../../../@dv/scss/dv";
+
+advs {
+
+  #advs {
+
+    .top-bg {
+
+      @include media-breakpoint('lt-md') {
+        height: 256px;
+      }
+    }
+
+    > .center {
+
+      > .header {
+
+        .search-wrapper {
+          width: 100%;
+          max-width: 480px;
+          border-radius: 28px;
+          overflow: hidden;
+          @include mat-elevation(1);
+
+          @include media-breakpoint('xs') {
+            width: 100%;
+          }
+        }
+
+        @include media-breakpoint('lt-md') {
+          padding: 8px 0;
+          height: 192px !important;
+          min-height: 192px !important;
+          max-height: 192px !important;
+        }
+      }
+    }
+  }
+
+  .advs-table {
+    flex: 1 1 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    .mat-header-row {
+      min-height: 64px;
+    }
+
+    .adv {
+      position: relative;
+      cursor: pointer;
+      height: 84px;
+    }
+
+    .mat-cell {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+    }
+
+
+    .mat-column-featured-asset {
+      flex: 0 1 220px;
+
+      .adv-asset {
+        width: 180px;
+        height: auto;
+        border: 1px solid rgba(0, 0, 0, .12);
+      }
+    }
+
+  }
+}
